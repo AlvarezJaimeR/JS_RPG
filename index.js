@@ -1,11 +1,16 @@
 "use strict"
-
-class Hero{
+class Character{
     constructor(name, health, attackPower, attack){
         this.name = name;
         this.health = health;
         this.attackPower = attackPower;
         this.attack = attack;
+    }
+}
+
+class Hero extends Character{
+    constructor(name, health, attackPower, attack){
+        super(name, health, attackPower, attack);
     }
 
     //Hercules attack prompt
@@ -15,17 +20,17 @@ class Hero{
         while (check == false){
             switch(attack){
                 case '1':
-                    console.log(this.name + ' will use ' + hercules.attack[0]);
+                    console.log(this.name + ' will use ' + this.attack[0]);
                     check = true;
-                    return hercules.attack[0];
+                    return this.attack[0];
                 case '2':
-                    console.log(this.name + ' will use ' + hercules.attack[1]);
+                    console.log(this.name + ' will use ' + this.attack[1]);
                     check = true;
-                    return hercules.attack[1];
+                    return this.attack[1];
                 case '3':
-                    console.log(this.name + ' will use ' + hercules.attack[2]);
+                    console.log(this.name + ' will use ' + this.attack[2]);
                     check = false;
-                    return hercules.attack[2];
+                    return this.attack[2];
                 default: 
                     alert('Choose one of the main attacks');
                     attack = prompt('1 - Sword Slash 2 - Double Knee Drop 3 - Tombstone Piledriver')
@@ -35,12 +40,9 @@ class Hero{
     }
 }
 
-class Foe{
+class Foe extends Character{
     constructor(name, health, attackPower, attack){
-        this.name = name;
-        this.health = health;
-        this.attackPower = attackPower;
-        this.attack = attack;
+        super(name, health, attackPower, attack);
     }
 
     randomAttack(){
@@ -52,43 +54,43 @@ class Foe{
 
 class Game{
     constructor(){
+    //Hercules stats
+    this.hercules = new Hero('Hercules', 2000, 100, ['Sword Slash','Double Knee Drop','Tombstone Piledriver']);
+    //Nemean Lion stats
+    this.nemeanLion = new Foe('Nemean Lion', 300, 25, ['Rawr', 'Claw Slash', 'Head Bite']);
+    //Lernaen Hydra stats
+    this.lernaenHydra = new Foe('Lernaen Hydra', 500, 40, ['Bite', 'Tail Whip', 'Flamethrower']);
+    //Cerberus stats
+    this.cerberus = new Foe('Cerberus', 700, 80, ['Headbutt', 'Fireball', 'Rock Throw']);
     }
+
     runGame(){
         alert('You are Hercules, the greatest of the Greek Heroes! Prepare for battle!');
         alert('There are 3 foes that you will need to conquer in order to save the world!');
         alert('Your first foe is the vicious Nemean Lion!');
         alert('The Nemean Lion is heading towards you.');
-        while (hercules.health > 0 || nemeanLion.health > 0){
-            hercules.chooseAttack();
-            nemeanLion.randomAttack();
-            hercules.health -= nemeanLion.attackPower;
-            nemeanLion.health -= hercules.attackPower;
-            console.log(hercules.name + ' only has ' + hercules.health + ' '
-                + nemeanLion.name + ' only has ' + nemeanLion.health);
-            if (hercules.health == 0){
+        while (this.hercules.health > 0 || this.nemeanLion.health > 0){
+            this.hercules.chooseAttack();
+            this.nemeanLion.randomAttack();
+            this.hercules.health -= this.nemeanLion.attackPower;
+            this.nemeanLion.health -= this.hercules.attackPower;
+            console.log(this.hercules.name + ' only has ' + this.hercules.health + ' '
+                + this.nemeanLion.name + ' only has ' + this.nemeanLion.health);
+            if (this.hercules.health == 0){
                 console.log('Hercules has died.');
                 break;
             }
-            else if (nemeanLion.health == 0){
+            else if (this.nemeanLion.health == 0){
                 console.log('The Nemean Lion has been slain');
                 break;
             }
         }
-        console.log('Hercules has only ' + hercules.health + ' health left.');
+        console.log('Hercules has only ' + this.hercules.health + ' health left.');
         alert('The battle carries on!');
-        
+
+
     }
 }
-
-//Hercules stats
-let hercules = new Hero('Hercules', 4000, 100, ['Sword Slash','Double Knee Drop','Tombstone Piledriver']);
-//Nemean Lion stats
-let nemeanLion = new Foe('Nemean Lion', 500, 25, ['Rawr', 'Claw Slash', 'Head Bite']);
-//Lernaen Hydra stats
-let lernaenHydra = new Foe('Lernaen Hydra', 600, 40, ['Bite', 'Tail Whip', 'Flamethrower']);
-//Cerberus stats
-let cerberus = new Foe('Cerberus', 3000, 80, ['Headbutt', 'Fireball', 'Rock Throw']);
-
 
 let game = new Game();
 game.runGame();
