@@ -10,8 +10,7 @@ class Hero{
 
     //Hercules attack prompt
     chooseAttack(){
-        alert('A foe is heading towards you. Choose an attack:');
-        let attack = prompt('1 - Sword Slash 2 - Double Knee Drop 3 - Tombstone Piledriver');
+        let attack = prompt('Choose an attack: 1 - Sword Slash 2 - Double Knee Drop 3 - Tombstone Piledriver');
         let check = false;
         while (check == false){
             switch(attack){
@@ -56,8 +55,28 @@ class Game{
     }
     runGame(){
         alert('You are Hercules, the greatest of the Greek Heroes! Prepare for battle!');
-        hercules.chooseAttack();
-        nemeanLion.randomAttack();
+        alert('There are 3 foes that you will need to conquer in order to save the world!');
+        alert('Your first foe is the vicious Nemean Lion!');
+        alert('The Nemean Lion is heading towards you.');
+        while (hercules.health > 0 || nemeanLion.health > 0){
+            hercules.chooseAttack();
+            nemeanLion.randomAttack();
+            hercules.health -= nemeanLion.attackPower;
+            nemeanLion.health -= hercules.attackPower;
+            console.log(hercules.name + ' only has ' + hercules.health + ' '
+                + nemeanLion.name + ' only has ' + nemeanLion.health);
+            if (hercules.health == 0){
+                console.log('Hercules has died.');
+                break;
+            }
+            else if (nemeanLion.health == 0){
+                console.log('The Nemean Lion has been slain');
+                break;
+            }
+        }
+        console.log('Hercules has only ' + hercules.health + ' health left.');
+        alert('The battle carries on!');
+        
     }
 }
 
