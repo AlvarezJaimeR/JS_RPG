@@ -78,8 +78,7 @@ class Game{
         console.log('Hercules has only ' + this.hercules.health + ' health left.');
         alert('The toughest foe is up ahead!');
         this.foeFight(this.cerberus);
-        console.log('Hercules has barely any health left... ' + this.hercules.health + ' health left.');
-        console.log('Hercules is victorious!');
+        this.victory();
 
     }
 
@@ -120,14 +119,26 @@ class Game{
             foe.health -= this.hercules.attackPower;
             console.log(this.hercules.name + ' only has ' + this.hercules.health + ' '
                 + foe.name + ' only has ' + foe.health);
-            if (this.hercules.health == 0){
+            if (this.hercules.health <= 0){
                 console.log('Hercules has died.');
                 break;
             }
-            else if (foe.health == 0){
+            else if (foe.health <= 0){
                 console.log('The ' + foe.name + ' has been slain');
                 break;
             }
+        }
+    }
+
+    victory(){
+        if (this.hercules.health > 0){
+            console.log('Hercules has barely any health left... ' + this.hercules.health + ' health left.');
+            console.log('Hercules is victorious!');
+            alert('You have defeated all of the foes standing in your way!');
+            alert('Hercules has saved the world!');
+        }
+        else if (this.hercules.helth <= 0){
+            console.log('Better luck next time!');
         }
     }
 }
