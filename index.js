@@ -14,7 +14,7 @@ class Hero extends Character{
     }
 
     //Hercules attack prompt
-    attack(){
+    chosenAttack(){
         let attack = prompt('Choose an attack: 1 - Sword Slash 2 - Double Knee Drop 3 - Tombstone Piledriver');
         let check = false;
         while (check == false){
@@ -45,7 +45,7 @@ class Foe extends Character{
         super(name, health, attackPower, attack);
     }
 
-    attack(){
+    chosenAttack(){
         let randomAttack = this.attack[Math.floor(Math.random()*this.attack.length)];
         console.log(this.name + ' will use ' + randomAttack);
         return randomAttack;
@@ -79,7 +79,6 @@ class Game{
         alert('The toughest foe is up ahead!');
         this.foeFight(this.cerberus);
         this.victory();
-
     }
 
     chooseWeapon(){
@@ -113,8 +112,8 @@ class Game{
 
     foeFight(foe){
         while (this.hercules.health > 0 || foe.health > 0){
-            this.hercules.attack();
-            foe.attack();
+            this.hercules.chosenAttack();
+            foe.chosenAttack();
             this.hercules.health -= foe.attackPower;
             foe.health -= this.hercules.attackPower;
             console.log(this.hercules.name + ' only has ' + this.hercules.health + ' '
@@ -137,7 +136,7 @@ class Game{
             alert('You have defeated all of the foes standing in your way!');
             alert('Hercules has saved the world!');
         }
-        else if (this.hercules.helth <= 0){
+        if (this.hercules.health <= 0){
             console.log('Better luck next time!');
         }
     }
