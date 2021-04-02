@@ -29,7 +29,7 @@ class Hero extends Character{
                     return this.attack[1];
                 case '3':
                     console.log(this.name + ' will use ' + this.attack[2]);
-                    check = false;
+                    check = true;
                     return this.attack[2];
                 default: 
                     alert('Choose one of the main attacks');
@@ -55,7 +55,7 @@ class Foe extends Character{
 class Game{
     constructor(){
     //Hercules stats
-    this.hercules = new Hero('Hercules', 2000, 100, ['Sword Slash','Double Knee Drop','Tombstone Piledriver']);
+    this.hercules = new Hero('Hercules', 2000, 100, ['Slash','Double Knee Drop','Tombstone Piledriver']);
     //Nemean Lion stats
     this.nemeanLion = new Foe('Nemean Lion', 300, 100, ['Rawr', 'Claw Slash', 'Head Bite']);
     //Lernaen Hydra stats
@@ -67,73 +67,65 @@ class Game{
     runGame(){
         alert('You are Hercules, the greatest of the Greek Heroes! Prepare for battle!');
         alert('There are 3 foes that you will need to conquer in order to save the world!');
+        this.chooseWeapon();        
         alert('Your first foe is the vicious Nemean Lion!');
         alert('The Nemean Lion is heading towards you.');
-        this.lionFight();
+        this.foeFight(this.nemeanLion);
         console.log('Hercules has only ' + this.hercules.health + ' health left.');
         alert('The battle carries on!');
         alert('There is a Lernaen Hydra rushing towards you!');
-        this.hydraFight();
+        this.foeFight(this.lernaenHydra);
         console.log('Hercules has only ' + this.hercules.health + ' health left.');
         alert('The toughest foe is up ahead!');
-        this.cerberusFight();
+        this.foeFight(this.cerberus);
         console.log('Hercules has barely any health left... ' + this.hercules.health + ' health left.');
         console.log('Hercules is victorious!');
 
     }
 
-    lionFight(){
-        while (this.hercules.health > 0 || this.nemeanLion.health > 0){
-            this.hercules.chooseAttack();
-            this.nemeanLion.randomAttack();
-            this.hercules.health -= this.nemeanLion.attackPower;
-            this.nemeanLion.health -= this.hercules.attackPower;
-            console.log(this.hercules.name + ' only has ' + this.hercules.health + ' '
-                + this.nemeanLion.name + ' only has ' + this.nemeanLion.health);
-            if (this.hercules.health == 0){
-                console.log('Hercules has died.');
-                break;
-            }
-            else if (this.nemeanLion.health == 0){
-                console.log('The Nemean Lion has been slain');
-                break;
-            }
-        }
-    }
-
-    hydraFight(){
-        while (this.hercules.health > 0 || this.lernaenHydra.health > 0){
-            this.hercules.chooseAttack();
-            this.lernaenHydra.randomAttack();
-            this.hercules.health -= this.lernaenHydra.attackPower;
-            this.lernaenHydra.health -= this.hercules.attackPower;
-            console.log(this.hercules.name + ' only has ' + this.hercules.health + ' '
-                + this.lernaenHydra.name + ' only has ' + this.lernaenHydra.health);
-            if (this.hercules.health == 0){
-                console.log('Hercules has died.');
-                break;
-            }
-            else if (this.lernaenHydra.health == 0){
-                console.log('The Lernaen Hydra has been slain');
-                break;
+    chooseWeapon(){
+        let weapon = prompt('Please pick 1 of the 3 available weapons: 1 - Sword (Strength) 2 - Shield (Defense) 3 - Lance (Balanced)');
+        let check = false;
+        while (check == false){
+            switch(weapon){
+                case '1':
+                    console.log(this.hercules.name + ' will use the sword!');
+                    this.hercules.health = 1000;
+                    this.hercules.attackPower = 250;
+                    check = true;
+                    break;
+                case '2':
+                    console.log(this.hercules.name + ' will make good use of the shield!');
+                    this.hercules.health = 3000;
+                    this.hercules.attackPower = 50;
+                    check = true;
+                    break; 
+                case '3':
+                    console.log(this.hercules.name + ' will gladly use the lance');
+                    check = true;
+                    break;
+                default: 
+                    alert('Choose one of these weapons.');
+                    weapon = prompt('Please pick 1 of the 3 available weapons: 1 - Sword (Strength) 2 - Shield (Defense) 3 - Lance (Balanced)');
+                    break;
             }
         }
     }
 
-    cerberusFight(){
-        while (this.hercules.health > 0 || this.cerberus.health > 0){
+    foeFight(foe){
+        while (this.hercules.health > 0 || foe.health > 0){
             this.hercules.chooseAttack();
-            this.cerberus.randomAttack();
-            this.hercules.health -= this.cerberus.attackPower;
-            this.cerberus.health -= this.hercules.attackPower;
+            foe.randomAttack();
+            this.hercules.health -= foe.attackPower;
+            foe.health -= this.hercules.attackPower;
             console.log(this.hercules.name + ' only has ' + this.hercules.health + ' '
-                + this.cerberus.name + ' only has ' + this.cerberus.health);
+                + foe.name + ' only has ' + foe.health);
             if (this.hercules.health == 0){
                 console.log('Hercules has died.');
                 break;
             }
-            else if (this.cerberus.health == 0){
-                console.log('Cerberus has been slain');
+            else if (foe.health == 0){
+                console.log('The ' + foe.name + ' has been slain');
                 break;
             }
         }
